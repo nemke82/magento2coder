@@ -1,3 +1,5 @@
+.ssh
+.git
 .cache
 .config
 .dotnet
