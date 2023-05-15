@@ -1,11 +1,11 @@
 [mysqld_safe]
-socket		= /run/mysqld.sock
+socket		= /run/mysqld/mysqld.sock
 nice		= 0
 
 [mysqld]
 user		= nemke82
-pid-file	= /run/mysqld.pid
-socket		= /run/mysqld.sock
+pid-file	= /run/mysqld/mysqld.pid
+socket		= /run/mysqld/mysqld.sock
 port		= 3306
 basedir		= /usr
 datadir		= /var/lib/mysql
