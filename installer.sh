@@ -96,18 +96,6 @@ cp nginx.conf /etc/nginx
  sudo wget -c https://chromedriver.storage.googleapis.com/80.0.3987.16/chromedriver_linux64.zip
  sudo unzip chromedriver_linux64.zip
 
-# Install Chrome and Chromium
- sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && sudo dpkg -i google-chrome-stable_current_amd64.deb; sudo apt-get -fy install \
-    && sudo apt-get install -yq \
-       gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
-       libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
-       libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
-       libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
-       fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
-
-sudo rm -f /home/nemke82/google-chrome-stable*
-
  curl -sS https://packagecloud.io/gpg.key | sudo apt-key add \
     && curl -sS https://packages.blackfire.io/gpg.key | sudo apt-key add \
     && sudo echo "deb http://packages.blackfire.io/debian any main" | sudo tee /etc/apt/sources.list.d/blackfire.list \
@@ -244,18 +232,17 @@ sudo chown -R nemke82:nemke82 /home/nemke82/elasticsearch-*
 
 cp sp-elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
 
- sudo apt-key adv --keyserver "hkps://keys.openpgp.org" --recv-keys "0x0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
+sudo apt-get update && sudo apt-get upgrade -y \
+    && sudo apt-key adv --keyserver "hkps://keys.openpgp.org" --recv-keys "0x0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
     && sudo apt-key adv --keyserver "keyserver.ubuntu.com" --recv-keys "F77F1EDA57EBB1CC" \
-    && sudo curl -1sLf 'https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey' | sudo apt-key add - \
-    && sudo echo 'deb http://ppa.launchpad.net/rabbitmq/rabbitmq-erlang/ubuntu bionic main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list \
-    && sudo echo 'deb-src http://ppa.launchpad.net/rabbitmq/rabbitmq-erlang/ubuntu bionic main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list \
-    && sudo echo 'deb https://packagecloud.io/rabbitmq/rabbitmq-server/debian/ buster main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list \
-    && sudo echo 'deb-src https://packagecloud.io/rabbitmq/rabbitmq-server/debian/ buster main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list \
+    && curl -1sLf 'https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey' | apt-key add - \
+    && echo 'deb https://packagecloud.io/rabbitmq/rabbitmq-server/debian/ buster main' | tee /etc/apt/sources.list.d/rabbitmq.list \
+    && echo 'deb-src https://packagecloud.io/rabbitmq/rabbitmq-server/debian/ buster main' | tee /etc/apt/sources.list.d/rabbitmq.list \
     && sudo apt-get update -y \
     && sudo apt-get install -y erlang-base \
        erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
        erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
-       erlang-time-tools erlang-snmp erlang-ssl \
+       erlang-snmp erlang-ssl \
        erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl
 
 ## Install rabbitmq-server and its dependencies
